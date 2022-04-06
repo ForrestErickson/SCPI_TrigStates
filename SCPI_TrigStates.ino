@@ -6,42 +6,57 @@
     However it is not guarenteed to do so.
 
    Experimenting with enumeration and switch/case usage for SCPI
+   Much of this was copied over from PDSArduino.ino
+   The RESET_PIN assumes the connection on the OctoUNO board.
 */
+
+#include "wink.h"
+#include "commands.h"
+
+//Hardware setup
+extern const int RESET_PIN = 12;   // To Drive HW Reset. Connect D12 to RES through 1K.
+
+//Some program constants
+//const char COMPANY[] PROGMEM = {"Amused Scientist"};
+extern const String COMPANY = "Amused Scientist";
+extern const String MODEL_NAME = "SCPI_TrigStates";
+extern const String VERSION = "0.0.1";    //Add serial commands
+extern const String LICENSE = "Public Domain";    //
+extern const String WARRANTY = "NONE";    //
 
 const long BAUD =  1000000;  // For faster
 
-
-//typedef enum {
-enum stateTRIGer {
-  IDLE,
-  INIT,
-  ARM,
-  TRIG,
-}
-stateTRIGer = IDLE;
-
-//stateTRIGer myStateTRIGer = IDLE;
-//myStateTRIGer = INIT;
-//myStateTRIGer = ARM;
-//myStateTRIGer = TRIG;
-
+//String variable global
+String inputString = "";         // a String to hold incoming data
+bool isTrigger = false;           // Start out not triggered.
+bool isLOCK_ON = false;           // Start out not locking.
+//extern stateTRIGer foo; //myStateTRIGer;
 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(BAUD); ////FLE Make Faster
   delay(100);
- Serial.print("stateTRIGer = ");       
- Serial.println(stateTRIGer);       
- 
-  stateTRIGer = ARM;
+  Serial.print("\n\nstateTRIGer = ");
+  //  Serial.println(stateTRIGer);
+  //  stateTRIGer = ARM;
+  Serial.print("stateTRIGer = ");
+  //  Serial.println(stateTRIGer);
 
- Serial.print("stateTRIGer = ");       
- Serial.println(stateTRIGer);       
-
+  //Splash message serial port
+  Serial.print(COMPANY); Serial.print(", ");
+  Serial.print(MODEL_NAME); Serial.print(", ");
+  Serial.print("VERSION: ");
+  Serial.println(VERSION);
+  Serial.print("LICENSE: ");
+  Serial.println(LICENSE);
+  Serial.print("WARRANTY: ");
+  Serial.println(WARRANTY);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  winkLED_BUILTIN(); //the built in LED.
+  checkCommands();
 
 }
