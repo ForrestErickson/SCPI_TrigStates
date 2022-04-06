@@ -44,6 +44,7 @@ void setup() {
   //  Serial.println(stateTRIGer);
 
   //Splash message serial port
+  Serial.println();
   Serial.print(COMPANY); Serial.print(", ");
   Serial.print(MODEL_NAME); Serial.print(", ");
   Serial.print("VERSION: ");

@@ -24,18 +24,20 @@ extern const String LICENSE;
 
 bool stringComplete = false;  // whether the string is complete
 //Serial SCPI like commands
+const String HELP = "HELP";
 const String START = "START";
 const String STOP = "STOP";
 const String RESET = "RESET"; //Reset Command
 const String RST = "*RST";    //Reset command
 const String IDN = "*IDN?";   //Identification Query
 const String CLS = "*CLS";    //Clear status command
+
 const String LOCK = "LOCK";    //
 const String ULOCK = "ULOCK";    //
-
 const String FREQ = "FREQ";    //Set frequency
+const String TRIGGER = "TRIG";    //Trigger state
 
-
+const String COMMANDS[] = {"HELP", "START", "STOP", "RESET", "*RST", "*IDN?", "*CLS", "LOCK", "ULOCK", "LOCK", "UNLOCK", "FREQ", "TIRG"} ;
 
 //typedef enum {
 enum stateTRIGer {
@@ -46,22 +48,35 @@ enum stateTRIGer {
 }
 stateTRIGer = IDLE;
 
-//Wait for any character from controller to start data
-void establishContact() {
-  while (Serial.available() <= 0) {
-    delay(300);
-    Serial.println("2.5,0");   // send an initial string
-  }
-  isTrigger = true;
-  stateTRIGer = TRIG;
-}// end establishContact()
-
 void checkCommands() {
   //Command strings
   // print the string when a newline arrives:
   if (stringComplete) {
     //Serial.println(inputString);    //For debug of command strings
     inputString.toUpperCase();
+
+    //Print the commands out serial port
+    if ( inputString.startsWith(HELP) | inputString.startsWith("H")) {
+      Serial.println("COMMANDS:");
+      for (int i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
+        Serial.println(COMMANDS[i]);
+      }
+      Serial.println();
+    }
+
+
+    if ( inputString.startsWith(TRIGGER)) {
+      if ( inputString.startsWith(TRIGGER + "?")) {
+        Serial.println("Got TIRGGER? command.");
+        Serial.println(stateTRIGer);
+      } else {
+        Serial.println("Got TIRGGER command.");
+        //To do  Clear ?
+        //Set instrument to defaults?
+        stateTRIGer = IDLE;
+        isTrigger = false;
+      }//else
+    }
 
     if ( inputString.startsWith(CLS)) {
       digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
