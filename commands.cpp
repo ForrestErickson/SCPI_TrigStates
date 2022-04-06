@@ -46,7 +46,7 @@ enum stateTRIGer {
   ARM,
   TRIG,
 }
-stateTRIGer = IDLE;
+ my_stateTRIGer = IDLE;
 
 void checkCommands() {
   //Command strings
@@ -68,12 +68,12 @@ void checkCommands() {
     if ( inputString.startsWith(TRIGGER)) {
       if ( inputString.startsWith(TRIGGER + "?")) {
         Serial.println("Got TIRGGER? command.");
-        Serial.println(stateTRIGer);
+        Serial.println(my_stateTRIGer);
       } else {
         Serial.println("Got TIRGGER command.");
         //To do  Clear ?
         //Set instrument to defaults?
-        stateTRIGer = IDLE;
+        my_stateTRIGer = IDLE;
         isTrigger = false;
       }//else
     }
@@ -83,7 +83,7 @@ void checkCommands() {
       Serial.println("Clear command status.");
       //To do  Clear ?
       //Set instrument to defaults?
-      stateTRIGer = IDLE;
+      my_stateTRIGer = IDLE;
       isTrigger = false;
     }
 
@@ -98,13 +98,13 @@ void checkCommands() {
 
     if ( inputString.startsWith(START)) {
       //      Serial.println("Got command start!");
-      stateTRIGer = TRIG;
+      my_stateTRIGer = TRIG;
       isTrigger = true;
     }
 
     if ( inputString.startsWith(STOP)) {
       //      Serial.println("Got command stop!");
-      stateTRIGer = IDLE;
+      my_stateTRIGer = IDLE;
       isTrigger = false;
     }
     if ( inputString.startsWith(RST) || inputString.startsWith(RESET) ) { //Hardware reset.
