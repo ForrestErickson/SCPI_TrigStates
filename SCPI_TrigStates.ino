@@ -30,7 +30,9 @@ const long BAUD =  1000000;  // For faster
 String inputString = "";         // a String to hold incoming data
 bool isTrigger = false;           // Start out not triggered.
 bool isLOCK_ON = false;           // Start out not locking.
-//extern stateTRIGer foo; //myStateTRIGer;
+
+//extern my_stateTRIGer ; //myStateTRIGer;
+extern stateTRIGer my_stateTRIGer = IDLE ; //myStateTRIGer;
 
 
 void setup() {
@@ -38,10 +40,10 @@ void setup() {
   Serial.begin(BAUD); ////FLE Make Faster
   delay(100);
   Serial.print("\n\nstateTRIGer = ");
-  //  Serial.println(stateTRIGer);
-  //  stateTRIGer = ARM;
+  Serial.println(my_stateTRIGer);
+  my_stateTRIGer = ARM;
   Serial.print("stateTRIGer = ");
-  //  Serial.println(stateTRIGer);
+  Serial.println(my_stateTRIGer);
 
   //Splash message serial port
   Serial.println();

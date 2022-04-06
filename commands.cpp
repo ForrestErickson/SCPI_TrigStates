@@ -39,14 +39,8 @@ const String TRIGGER = "TRIG";    //Trigger state
 
 const String COMMANDS[] = {"HELP", "START", "STOP", "RESET", "*RST", "*IDN?", "*CLS", "LOCK", "ULOCK", "LOCK", "UNLOCK", "FREQ", "TIRG"} ;
 
-//typedef enum {
-enum stateTRIGer {
-  IDLE,
-  INIT,
-  ARM,
-  TRIG,
-}
- my_stateTRIGer = IDLE;
+
+// stateTRIGer my_stateTRIGer = IDLE;
 
 void checkCommands() {
   //Command strings
