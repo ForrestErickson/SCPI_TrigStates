@@ -1,10 +1,10 @@
 /*commands
-   Proccess serial port commands
+   Process serial port commands
    SCPI like commands. Refere to scpi-99.pdf
    By: Forrest Lee Erickson
    Date: 20210924
    Date: 20220406 Rework for enumerated trigger states.
-    These commands can not be concatenated. Are not parsed for the ";" delimiter.
+    These commands cannot be concatenated. Are not parsed for the ";" delimiter.
 */
 
 //--------------- Includes ---------------------------
