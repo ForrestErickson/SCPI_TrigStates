@@ -33,7 +33,6 @@ bool isLOCK_ON = false;           // Start out not locking.
 
 
 extern stateTRIGer my_stateTRIGer = IDLE ; //myStateTRIGer; in commands.h
-extern stateTRIGer my_MAX_stateTRIGer = MAX; ///
 
 void setup() {
   // put your setup code here, to run once:

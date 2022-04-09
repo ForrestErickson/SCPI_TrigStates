@@ -38,7 +38,7 @@ const String FREQ = "FREQ";    //Set frequency
 const String TRIGGER = "TRIG";    //Trigger state
 
 const String COMMANDS[] = {HELP, START, STOP, RESET, RST, IDN, CLS, LOCK, ULOCK, FREQ, TRIGGER} ;
-
+const stateTRIGer my_MAX_stateTRIGer = MAX; // For modulo division to manage states.
 
 void checkCommand() {
   //Command strings
