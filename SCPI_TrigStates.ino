@@ -31,20 +31,14 @@ String inputString = "";         // a String to hold incoming data
 bool isTrigger = false;           // Start out not triggered.
 bool isLOCK_ON = false;           // Start out not locking.
 
-//extern my_stateTRIGer ; //myStateTRIGer;
-extern stateTRIGer my_stateTRIGer = IDLE ; //myStateTRIGer;
 
+extern stateTRIGer my_stateTRIGer = IDLE ; //myStateTRIGer; in commands.h
+extern stateTRIGer my_MAX_stateTRIGer = MAX; ///
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(BAUD); ////FLE Make Faster
   delay(100);
-  Serial.print("\n\nstateTRIGer = ");
-  Serial.println(my_stateTRIGer);
-  my_stateTRIGer = ARM;
-  Serial.print("stateTRIGer = ");
-  Serial.println(my_stateTRIGer);
-
   //Splash message serial port
   Serial.println();
   Serial.print(COMPANY); Serial.print(", ");
@@ -55,7 +49,12 @@ void setup() {
   Serial.println(LICENSE);
   Serial.print("WARRANTY: ");
   Serial.println(WARRANTY);
-}
+
+  Serial.print("Instrument status: ");
+  Serial.print("nstateTRIGer = ");
+  Serial.println(my_stateTRIGer);
+
+}//end setup()
 
 void loop() {
   // put your main code here, to run repeatedly:

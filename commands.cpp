@@ -37,37 +37,30 @@ const String ULOCK = "ULOCK";    //
 const String FREQ = "FREQ";    //Set frequency
 const String TRIGGER = "TRIG";    //Trigger state
 
-const String COMMANDS[] = {"HELP", "START", "STOP", "RESET", "*RST", "*IDN?", "*CLS", "LOCK", "ULOCK", "LOCK", "UNLOCK", "FREQ", "TIRG"} ;
+const String COMMANDS[] = {HELP, START, STOP, RESET, RST, IDN, CLS, LOCK, ULOCK, FREQ, TRIGGER} ;
 
 
-// stateTRIGer my_stateTRIGer = IDLE;
-
-void checkCommands() {
+void checkCommand() {
   //Command strings
   // print the string when a newline arrives:
   if (stringComplete) {
     //Serial.println(inputString);    //For debug of command strings
     inputString.toUpperCase();
 
-    //Print the commands out serial port
-    if ( inputString.startsWith(HELP) | inputString.startsWith("H")) {
-      Serial.println("COMMANDS:");
-      for (int i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
-        Serial.println(COMMANDS[i]);
-      }
-      Serial.println();
-    }
-
-
+    //Report or Increment the trigger state
     if ( inputString.startsWith(TRIGGER)) {
       if ( inputString.startsWith(TRIGGER + "?")) {
         Serial.println("Got TIRGGER? command.");
         Serial.println(my_stateTRIGer);
-      } else {
+        Serial.println(TIRG_STATES[my_stateTRIGer]);
+      } else {//trigger increment
         Serial.println("Got TIRGGER command.");
-        //To do  Clear ?
-        //Set instrument to defaults?
-        my_stateTRIGer = IDLE;
+        my_stateTRIGer = (my_stateTRIGer + 1) % my_MAX_stateTRIGer; // Mod by the last enumerated element.
+        Serial.print("Size of my_MAX_stateTRIGer= ");
+        Serial.println(my_MAX_stateTRIGer);
+        Serial.print("my_stateTRIGer is now= ");
+        Serial.println(TIRG_STATES[my_stateTRIGer]);
+
         isTrigger = false;
       }//else
     }
@@ -113,12 +106,26 @@ void checkCommands() {
       Serial.println(VERSION);
     }
 
+    //Print the commands out serial port
+    if ( inputString.startsWith(HELP) | inputString.startsWith("H")) {
+      Serial.println("COMMANDS:");
+      for (int i = 0; i < sizeof(COMMANDS) / sizeof(COMMANDS[0]); i++) {
+        Serial.println(COMMANDS[i]);
+      }
+      Serial.println();
+    }//end HELP
+
     //End of strin proccessing so clear the string:
     inputString = "";
     stringComplete = false;
   }// proccessing command strings.
 }//end checkCommands
 
+//Check command string and parse on ";"
+void checkCommands() {
+  //todo parse
+  checkCommand();
+}// end checkCommands
 
 /*
   SerialEvent occurs whenever a new data comes in the hardware serial RX. This
